@@ -1,12 +1,24 @@
+<?php
+    session_start();
+    include_once('config.php');
+
+
+    $sql = "SELECT * FROM cliente";
+    $result = $conexao->query($sql);
+
+    if (!$result) {
+        die('Erro na consulta: ' . mysqli_error($conexao));
+    }
+?>
+
 <!DOCTYPE HTML>
 
-<html>
 	<head>
-		<link rel="shortcut icon" href="imgs/icon-br.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="imgs/icon-br.ico" type="image/x-icon">
 		<title> BR SHOP </title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/style02.css" />
+		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -20,87 +32,94 @@
 
 
 <!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li class="current"><a href="home.html">Home</a></li>
-								<li>
-									<a href="#">Serviços</a>
-									<ul>
-										<li><a href="serviços.html">Lavagem</a></li>
-										<li><a href="serviços.html">Pintura</a></li>
-										<li><a href="serviços.html">Manutenção</a></li>	
-									</ul>
-								</li>
-								<li><a href="login.html">Login</a></li>
-								<li><a href="registrar.php">Cadastro</a></li>
-							</ul>
-						</nav>
+<nav id="nav">
+<ul>
+<li class="current"><a href="home.html">Home</a></li>
+<li>
+<a href="#">Serviços</a>
+<ul>
+	<li><a href="serviços.html">Lavagem</a></li>
+	<li><a href="serviços.html">Pintura</a></li>
+	<li><a href="serviços.html">Manutenção</a></li>	
+</ul>
+		</li>
+			<li><a href="login.html">Login</a></li>
+		<li><a href="registrar.php">Cadastro</a></li>
+				</ul>
+			</nav>
 <br>
-
+					
 					
 
-						
 <!-- Main -->
-				<section id="main">
+<section id="main">
 					<div class="container">
 						<div class="row">
-							<div class="col-12">
+						
+					
+<!-- Dados do usuário -->
 
-<!-- Nossos serviços -->
+<br>
+<h4>Clientes:</h4>
+<br>
+<div class="tabelas">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>nome</th>
+                <th>email</th>
+                <th>data_cadastro</th>
+                <th>horario</th>
+                <th>Ações</th> <!-- Adicionado novo cabeçalho para as ações -->
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($user_data = mysqli_fetch_assoc($result)) { ?>
+                <tr>
+                    <td><?php echo $user_data['id_cliente']; ?></td>
+                    <td><?php echo $user_data['nome']; ?></td>
+                    <td><?php echo $user_data['email']; ?></td>
+                    <td><?php echo $user_data['data_cadastro']; ?></td>
+                    <td><?php echo $user_data['horario']; ?></td>
+                    <td>
+                        <a class='btn btn-sm btn-primary' href='remover.php?id_cliente=$user_data[id_cliente]' title='Remover'>
+	                        <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='currentColor' class='bi bi-x-circle-fill' viewBox='0 0 16 16'>
+  		                <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z'/>
+	                    </svg>
+                        </a>
 
-<!-- Content -->
-<!-- Content -->
+                        <a class='' title='Confirmar'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                        </a>
 
-<div class="custom">
 
-    <div class="inputForm">
-        <form action="testelogin.php" method="POST">
-            
-                
-                <br>
-                <div class="inputBox">
-                    <input type="text" name="email" id="email" class="inputUser" required>
-                    <label for="email" class="labelInput">E-MAIL</label>
-                </div>
-                <br><br>
-                <div class="container"></div>
-                <div class="inputBox">
-                    <input type="text" name="placa" id="placa" class="inputUser" required>
-                    <label for="placa" class="labelInput">PLACA DO VEICULO</label>
-                </div>
-                
-                <br><br>
-               <input type="submit" name="submit" id="submit" value="Iniciar Sessão">
-			   </form>
-    </div>
-  <form>
-    <div class="inputForm">
-          
-              
-              <br>
-              <div class="">
-                <B>Precisa criar uma conta?</B>
-           
-              <br><br>
-              <a href="registrar.php">
-                <button type="button" id="submit">Registra-se</button>
-              </a>
-
-			  <br><br>
-              <a href="funcionario.php">
-                <button type="button" id="submit">Funcionario</button>
-              </a>
-          
-      </form>
-
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
 </div>
 
 
-</section>
+<br>
+     
 
-  <!-- rodapé -->
 
-  <style>
+
+
+
+<!--  -->
+<div class="col-12">
+<br>
+
+</section>                              
+              
+<!-- rodapé -->
+
+<style>
 	.roda-pe{
 		color: white;
 		display: inline-block;
@@ -183,8 +202,9 @@
 			</ul>
 		</footer>	
 </div>
-		
-	<!-- Scripts -->
+
+ 
+<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.dropotron.min.js"></script>
 	<script src="assets/js/browser.min.js"></script>

@@ -1,3 +1,9 @@
+<?php
+
+$senha_fixa = "br.shop2023";
+
+?>
+
 <!DOCTYPE HTML>
 
 <html>
@@ -55,21 +61,21 @@
 <div class="custom">
 
     <div class="inputForm">
-        <form action="testelogin.php" method="POST">
+        <form action="dados-funcionario.php" method="POST">
             
                 
                 <br>
                 <div class="inputBox">
                     <input type="text" name="nome" id="nome"  class="inputUser" required>
                     <label for="nome" class="labelInput">NOME</label>
-                </div>
+            </div>
+
                 <br><br>
                 <div class="container"></div>
 				<div class="inputBox">
-					<input type="password" name="senha" id="senha"  class="inputUser" required>
+					<input type="password" name="senha" id="senha" class="inputUser" required>
                     <label for="nome" class="labelInput">SENHA DA EMPRESA</label>
 					<i class="bi bi-eye-fill" id="btn-senha" onclick="mostrarSenha()"></i>
-		
 			</div>
                 
                 <br><br>
@@ -177,22 +183,39 @@
 	<script src="assets/js/main.js"></script>
 
 	<script>
-	function mostrarSenha(){
-    var inputPass = document.getElementById('senha')
-    var btnShowPass = document.getElementById('btn-senha')
+    function mostrarSenha() {
+        var inputPass = document.getElementById('senha');
+        var btnShowPass = document.getElementById('btn-senha');
 
-    if(inputPass.type === 'password'){
-        inputPass.setAttribute('type','text')
-        btnShowPass.classList.replace('bi-eye-fill','bi-eye-slash-fill')
-    }else{
-        inputPass.setAttribute('type','password')
-        btnShowPass.classList.replace('bi-eye-slash-fill','bi-eye-fill')
-
+        if (inputPass.type === 'password') {
+            inputPass.setAttribute('type', 'text');
+            btnShowPass.classList.replace('bi-eye-fill', 'bi-eye-slash-fill');
+        } else {
+            inputPass.setAttribute('type', 'password');
+            btnShowPass.classList.replace('bi-eye-slash-fill', 'bi-eye-fill');
+        }
     }
-}
 
+	window.onload = function() {
+        var senhaInput = document.getElementById("senha");
+        senhaInput.value = ""; // Define o campo de senha em branco
+    };
 
-	</script>	
+    document.querySelector("form").addEventListener("submit", function(event) {
+        var senhaInput = document.getElementById("senha");
+        var senha = senhaInput.value;
+
+        if (senha === "br.shop2023") {
+            // A senha está correta, redireciona para a página de dados do funcionário
+            window.location.href = "dados-funcionario.php";
+        } else {
+            // A senha está incorreta, evita o envio do formulário
+            alert("Senha incorreta. Por favor, tente novamente.");
+            event.preventDefault();
+        }
+    });
+	
+</script>	
 
 	</body>
 </html>
